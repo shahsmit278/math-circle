@@ -1,44 +1,18 @@
-version: 2.1
+version: 2.0
+
 jobs:
-  build:
-    working_directory: ~/public
-    docker:
-      - image: circleci/node:10.15.3
+  build: # name of your job
     machine:
-       image: windows-default
+      image: windows-default # Windows machine image
     resource_class: windows.medium
     steps:
-      - checkout
-      - run:
-          name: update-npm
-          command: "sudo npm install -g npm@latest"
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: install-npm-wee
-          command: npm install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - ./node_modules
-      - run:
-          name: test
-          command: npm test
+      # default shell is Powershell
       - run:
          command: $(echo hello | Out-Host; $?) -and $(echo world | Out-Host; $?)
          shell: powershell.exe
-     - run:
+      - run:
          command: echo hello && echo world
          shell: bash.exe
       - run:
          command: echo hello & echo world
          shell: cmd.exe
-      - store_artifacts:
-          path: test-results.xml
-          prefix: tests
-      - store_artifacts:
-          path: coverage
-          prefix: coverage
-      - store_test_results:
-          path: test-results.xml
-
