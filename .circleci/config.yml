@@ -4,6 +4,9 @@ jobs:
     working_directory: ~/public
     docker:
       - image: circleci/node:10.15.3
+    machine:
+       image: windows-default
+    resource_class: windows.medium
     steps:
       - checkout
       - run:
@@ -21,6 +24,15 @@ jobs:
       - run:
           name: test
           command: npm test
+      - run:
+         command: $(echo hello | Out-Host; $?) -and $(echo world | Out-Host; $?)
+         shell: powershell.exe
+     - run:
+         command: echo hello && echo world
+         shell: bash.exe
+      - run:
+         command: echo hello & echo world
+         shell: cmd.exe
       - store_artifacts:
           path: test-results.xml
           prefix: tests
@@ -29,3 +41,4 @@ jobs:
           prefix: coverage
       - store_test_results:
           path: test-results.xml
+
