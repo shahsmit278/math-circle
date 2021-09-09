@@ -21,9 +21,9 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
-      # - run:
-      #     name: test
-      #     command: npm test
+      - run:
+          name: test
+          command: npm test
       - store_artifacts:
           path: test-results.xml
           prefix: tests
@@ -50,22 +50,7 @@ jobs:
             heroku run rake db:migrate
             sleep 5 # sleep for 5 seconds to wait for dynos
             heroku restart
-        # command: |
-        #   set -x
-        #   sudo curl https://cli-assets.heroku.com/install.sh | sh
-        #   HEROKU_API_KEY=25bb37f1-5feb-4d08-bc7b-a00aaf23f36b heroku container:login
-        #   HEROKU_API_KEY=25bb37f1-5feb-4d08-bc7b-a00aaf23f36b heroku container:push -a deploy-react-test-app web
-        #   HEROKU_API_KEY=25bb37f1-5feb-4d08-bc7b-a00aaf23f36b heroku container:release -a deploy-react-test-app web
         
-
-
-    # steps:
-    #     - checkout
-    #     - run: systeminfo
-    #     # - run:
-    #     #   name: "Check docker"
-    #     #   shell: powershell.exe
-    #     #   command: "docker info"
         
 workflows:
   build-service:
