@@ -32,21 +32,41 @@ jobs:
       - store_test_results:
           path: test-results.xml
   deploy:
-    executor:
-      name: windows-tools/preview-default
-      shell: bash.exe
+    docker:
+    - image: circleci/buildpack-deps:curl-browsers
+      auth:
+        username: mydockerhub-user
+        password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+    steps:
+    - run:
+        command: echo "Hello ${CIRCLE_USERNAME}"
+    - run:
+        command: |-
+          echo "TRIGGERER: ${CIRCLE_USERNAME}"
+          echo "BUILD_NUMBER: ${CIRCLE_BUILD_NUM}"
+          echo "BUILD_URL: ${CIRCLE_BUILD_URL}"
+          echo "BRANCH: ${CIRCLE_BRANCH}"
+          echo "RUNNING JOB: ${CIRCLE_JOB}"
+          echo "JOB PARALLELISM: ${CIRCLE_NODE_TOTAL}"
+          echo "CIRCLE_REPOSITORY_URL: ${CIRCLE_REPOSITORY_URL}"
+        name: Show some of the CircleCI runtime env vars
+    - run:
+        command: |-
+          echo "uname:" $(uname -a)
+          echo "arch: " $(arch)
+        name: Show system information
+    # executor:
+    #   name: windows-tools/preview-default
+    #   shell: bash.exe
     # machine:
     #   image: windows-default # Windows machine image
     # resource_class: windows.medium
-    steps:
-      - checkout
-      - run: ls -lah
+    # steps:
+    #   - checkout
+    #   - run: ls -lah
     #   - run:
-    #       command: ping circleci.com
-    #       shell: cmd.exe
-      - run:
-          command: echo 'This is powershell'
-          shell: powershell.exe
+    #       command: echo 'This is powershell'
+    #       shell: powershell.exe
 
 
     # steps:
@@ -63,3 +83,8 @@ workflows:
     jobs:
     #   - build
       - deploy
+        # requires:
+        #     - build
+        #   filters:
+        #     branches:
+        #       only: test_deploy
