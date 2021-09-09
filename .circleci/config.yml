@@ -30,8 +30,8 @@ jobs:
       - store_test_results:
           path: test-results.xml
   deploy:
-  machine:
-      image: windows-default # Windows machine image
+    machine:
+      - image: windows-default # Windows machine image
     resource_class: windows.medium
     steps:
         - checkout
