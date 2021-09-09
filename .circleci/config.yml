@@ -31,9 +31,8 @@ jobs:
           path: test-results.xml
   deploy:
     machine:
-      - image: windows-default # Windows machine image
+      image: windows-default # Windows machine image
     resource_class: windows.medium
     steps:
         - checkout
-        - run:
-            name: Deploy Branch to local
+        
