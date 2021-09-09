@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  windows-tools: circleci/windows-tools@0.0.4
 jobs:
   build:
     working_directory: ~/public
@@ -30,20 +32,34 @@ jobs:
       - store_test_results:
           path: test-results.xml
   deploy:
-    machine:
-      image: windows-default # Windows machine image
-    resource_class: windows.medium
+    executor:
+      name: windows-tools/preview-default
+      shell: bash.exe
+    # machine:
+    #   image: windows-default # Windows machine image
+    # resource_class: windows.medium
     steps:
-        - checkout
-        - run: systeminfo
-        # - run:
-        #   name: "Check docker"
-        #   shell: powershell.exe
-        #   command: "docker info"
+      - checkout
+      - run: ls -lah
+      - run:
+          command: ping circleci.com
+          shell: cmd.exe
+      - run:
+          command: echo 'This is powershell'
+          shell: powershell.exe
+
+
+    # steps:
+    #     - checkout
+    #     - run: systeminfo
+    #     # - run:
+    #     #   name: "Check docker"
+    #     #   shell: powershell.exe
+    #     #   command: "docker info"
         
 workflows:
   build-service:
     
     jobs:
-      - build
+    #   - build
       - deploy
