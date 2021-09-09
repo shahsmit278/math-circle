@@ -56,9 +56,9 @@ workflows:
   build-service:
     jobs:
       - build
-      - deploy:
-        requires:
-          - build
+      - deploy
+        # requires:
+        #   - build
         # requires:
         #     - build
           # filters:
