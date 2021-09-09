@@ -35,4 +35,11 @@ jobs:
     resource_class: windows.medium
     steps:
         - checkout
+        - run: systeminfo
+      - run:
+          name: "Check docker"
+          shell: powershell.exe
+          command: |
+            docker info
+            docker run hello-world:nanoserver-1809
         
