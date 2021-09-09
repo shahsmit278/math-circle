@@ -41,3 +41,9 @@ jobs:
         #   shell: powershell.exe
         #   command: "docker info"
         
+workflows:
+  build-service:
+    
+    jobs:
+      - build
+      - deploy
