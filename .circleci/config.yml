@@ -57,8 +57,11 @@ workflows:
     jobs:
       - build
       - deploy
-        requires:
+        - test1:
+          requires:
             - build
+        # requires:
+        #     - build
           # filters:
           #   branches:
           #     only: heroku_deploy
