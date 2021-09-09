@@ -71,7 +71,7 @@ workflows:
   build-service:
     jobs:
       - build
-      - deploy
+      - deploy:
         requires:
             - build
           filters:
