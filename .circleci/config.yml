@@ -36,8 +36,8 @@ jobs:
     steps:
         - checkout
         - run: systeminfo
-        - run:
-          name: "Check docker"
-          shell: powershell.exe
-          command: "docker run hello-world:nanoserver-1809"
+        # - run:
+        #   name: "Check docker"
+        #   shell: powershell.exe
+        #   command: "docker info"
         
