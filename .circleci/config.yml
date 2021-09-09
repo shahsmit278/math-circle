@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   windows-tools: circleci/windows-tools@0.0.4
+  heroku: circleci/heroku@1.0.1
 jobs:
   build:
     working_directory: ~/public
@@ -32,18 +33,18 @@ jobs:
       - store_test_results:
           path: test-results.xml
   deploy:
-    executor:
-      name: windows-tools/preview-default
-      shell: bash.exe
-    # machine:
-    #   image: windows-default # Windows machine image
-    # resource_class: windows.medium
+    machine: true
     steps:
       - checkout
-      - run: ls -lah
       - run:
-          command: echo 'This is powershell'
-          shell: powershell.exe
+        name: 'build and push code on heroku'
+        command: |
+          set -x
+          sudo curl https://cli-assets.heroku.com/install.sh | sh
+          HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+          HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a deploy-react-test-app web
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a deploy-react-test-app web
+        
 
 
     # steps:
@@ -58,7 +59,7 @@ workflows:
   build-service:
     jobs:
       - build
-      # - deploy
+      - deploy
         # requires:
         #     - build
         #   filters:
