@@ -71,9 +71,9 @@ workflows:
   build-service:
     jobs:
       - build
-      - deploy:
-        requires:
-            - build
-          filters:
-            branches:
-              only: heroku_deploy
+      - deploy
+        # requires:
+        #     - build
+        #   filters:
+        #     branches:
+        #       only: heroku_deploy
