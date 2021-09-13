@@ -57,9 +57,7 @@ workflows:
       - deploy:
           requires:
             - build
-              filters:
-                branches:
-                  only: heroku_deploy
+              
         # requires:
         #   - build
         # requires:
