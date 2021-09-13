@@ -51,7 +51,7 @@ jobs:
         
         
 workflows:
-  build-service:
+  build-deploy-service:
     jobs:
       - build
       - deploy:
